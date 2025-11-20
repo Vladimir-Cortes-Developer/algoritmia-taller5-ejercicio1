@@ -45,7 +45,7 @@ class SistemaRegistroEmpleados
                     RegistrarEmpleado();
                     break;
                 case 2:
-                    //MostrarPromedioSalarios(salarios, totalEmpleados);
+                    MostrarPromedioSalarios();
                     break;
                 case 3:
                    // MostrarEmpleadoMayorSalario(nombres, salarios, totalEmpleados);
@@ -144,13 +144,40 @@ class SistemaRegistroEmpleados
         Console.WriteLine("Ingresando al método Mostrar Empleado Mayor Salario");
     }
 
-    void MostrarPromedioSalarios(double[] salarios, int totalEmpleados)
+    private static void MostrarPromedioSalarios()
     {
-        //throw new NotImplementedException();
-        Console.WriteLine("Ingresando al método Mostrar Promedio salarios");
+        Console.Clear();
+        Console.WriteLine("╔════════════════════════════════════════════╗");
+        Console.WriteLine("║        PROMEDIO DE SALARIOS                ║");
+        Console.WriteLine("╚════════════════════════════════════════════╝");
 
+        if (totalEmpleados == 0)
+        {
+            Console.WriteLine("No hay empleados registrados");
+        }
+        else
+        {
+            var promedio = CalcularPromedioSalarios();
+            Console.WriteLine($"Total de empleados: {totalEmpleados}");
+            Console.WriteLine($"Promedio de salarios: ${promedio:F2}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Presione ENTER para continuar...");
+        Console.ReadKey();
     }
 
+    private static decimal CalcularPromedioSalarios()
+    {
+        if (totalEmpleados == 0 )
+        {
+            return 0;
+        }
+
+        return empleados
+            .Take(totalEmpleados)
+            .Average(e => e.Salario);
+    }
 }
 
 
