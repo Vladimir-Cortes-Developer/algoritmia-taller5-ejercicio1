@@ -48,7 +48,7 @@ class SistemaRegistroEmpleados
                     MostrarPromedioSalarios();
                     break;
                 case 3:
-                   // MostrarEmpleadoMayorSalario(nombres, salarios, totalEmpleados);
+                   MostrarEmpleadoMayorSalario();
                     break;
                 case 4:
                     //AplicarAumentoSalarios(nombres, salarios, totalEmpleados);
@@ -138,10 +138,41 @@ class SistemaRegistroEmpleados
         Console.WriteLine("Ingresando al método Aplicar Aumento Salarios");
     }
 
-    void MostrarEmpleadoMayorSalario(string[] nombres, double[] salarios, int totalEmpleados)
+    private static void MostrarEmpleadoMayorSalario()
     {
-        //throw new NotImplementedException();
-        Console.WriteLine("Ingresando al método Mostrar Empleado Mayor Salario");
+        Console.Clear();
+        Console.WriteLine("*********************************");
+        Console.WriteLine("   EMPLEADO CON MAYOR SALARIO    ");
+        Console.WriteLine("*********************************");
+        Console.WriteLine();
+
+        if (totalEmpleados == 0)
+        {
+            Console.WriteLine("No hay empleados registrados");
+        }
+        else {
+            int indice = EncontrarMayorSalario();
+            var empleado = empleados[indice];
+            Console.WriteLine($"Nombre: {empleado.Nombre}");
+            Console.WriteLine($"Salario: ${empleado.Salario:F2}");        
+        }
+        Console.WriteLine();
+        Console.WriteLine("Presione una ENTER para continuar ....");
+        Console.ReadKey();
+    }
+
+    private static int EncontrarMayorSalario()  // Función que retorna un entero
+    {
+        int indice = 0;
+        decimal mayorSalario = empleados[0].Salario;
+        for (int i = 1; i < totalEmpleados; i++) { 
+            if (empleados[i].Salario > mayorSalario) {
+                
+                mayorSalario = empleados[i].Salario;
+                indice = i;
+            }
+        }
+        return indice;
     }
 
     private static void MostrarPromedioSalarios()
