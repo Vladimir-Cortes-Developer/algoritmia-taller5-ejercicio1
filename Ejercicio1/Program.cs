@@ -51,7 +51,7 @@ class SistemaRegistroEmpleados
                    MostrarEmpleadoMayorSalario();
                     break;
                 case 4:
-                    //AplicarAumentoSalarios(nombres, salarios, totalEmpleados);
+                    AplicarAumentoSalarios();
                     break;
                 case 5:
                     //MostrarEmpleadosPorEdad(nombres, edades, salarios, totalEmpleados);
@@ -132,10 +132,58 @@ class SistemaRegistroEmpleados
         Console.WriteLine("Ingresando al método Mostrar empleados por edad");
     }
 
-    void AplicarAumentoSalarios(string[] nombres, double[] salarios, int totalEmpleados)
+    private static void AplicarAumentoSalarios()
     {
-        //throw new NotImplementedException();
-        Console.WriteLine("Ingresando al método Aplicar Aumento Salarios");
+        Console.Clear();
+        Console.WriteLine("****************************************");
+        Console.WriteLine("  APLICAR AUMENTO DEL 10% AL SALARIO    ");
+        Console.WriteLine("****************************************");
+        Console.WriteLine();
+
+        if (totalEmpleados == 0)
+        {
+            Console.WriteLine("Ni hay empleados registrados");
+        }
+        else {
+            int afectados = AplicarAumento();
+
+            if (afectados > 0)
+            {
+                Console.WriteLine($"Se aplico aumento a {afectados} empleado(s).");
+                Console.WriteLine();
+                Console.WriteLine("Empleados con aumento aplicado");
+                Console.WriteLine("___________________________________");
+
+                for (int i = 0; i < totalEmpleados; i++)
+                {
+                    if (empleados[i].Salario < 1000)
+                    {
+                        Console.WriteLine($"{empleados[i].Nombre} - Nunvo salario: ${empleados[i].Salario:F2}");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("No hay empleados con salario mayor qe $ 1000");
+            }
+        }
+        Console.WriteLine();
+        Console.WriteLine("Presione una ENTER para continuar ....");
+        Console.ReadKey();
+    }
+
+    private static int AplicarAumento()
+    {
+        int contador = 0;
+        for (int i = 0;i < totalEmpleados;i++) 
+        {
+            if (empleados[i].Salario < 1000)
+            {
+                empleados[i] = empleados[i] with { Salario = empleados[i].Salario * 1.10m };
+                contador++;
+            }
+        }
+        return contador;
     }
 
     private static void MostrarEmpleadoMayorSalario()
@@ -152,7 +200,7 @@ class SistemaRegistroEmpleados
         }
         else {
             int indice = EncontrarMayorSalario();
-            var empleado = empleados[indice];
+            Empleado empleado = empleados[indice];
             Console.WriteLine($"Nombre: {empleado.Nombre}");
             Console.WriteLine($"Salario: ${empleado.Salario:F2}");        
         }
