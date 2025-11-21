@@ -54,22 +54,20 @@ class SistemaRegistroEmpleados
                     AplicarAumentoSalarios();
                     break;
                 case 5:
-                    //MostrarEmpleadosPorEdad(nombres, edades, salarios, totalEmpleados);
+                    MostrarEmpleadosPorEdad();
                     break;
                 case 6:
                     Console.WriteLine("¡Gracias por usar el sistema! Saliendo...");
                     System.Threading.Thread.Sleep(2000);
                     break;
                 default:
-                    Console.WriteLine("? Opción inválida. Intente nuevamente.");
+                    Console.WriteLine("¡Opción inválida. Intente nuevamente!");
                     System.Threading.Thread.Sleep(2000);
                     break;
             }
 
         } while (opcion != 6);
     }
-
-
 
    static void RegistrarEmpleado()
     {
@@ -120,16 +118,56 @@ class SistemaRegistroEmpleados
         totalEmpleados++;
         Console.WriteLine("Empleado registrado correctamente.");
         System.Threading.Thread.Sleep(3000);
+    }    
+
+
+   private static void MostrarEmpleadosPorEdad()
+    {
+        Console.Clear();
+        Console.WriteLine("╔════════════════════════════════════════════╗");
+        Console.WriteLine("║    MOSTRAR EMPLEADOS POR RANGO DE EDAD     ║");
+        Console.WriteLine("╚════════════════════════════════════════════╝");
+        Console.WriteLine();
+
+        if (totalEmpleados == 0)
+        {
+            Console.WriteLine("No hay empleados registrados");
+        }
+        else
+        {
+            MostrarEmpleadosPorRangoEdad("18-30 años", 18, 30);
+            Console.WriteLine();
+            MostrarEmpleadosPorRangoEdad("31-50 años", 31, 50);
+            Console.WriteLine();
+            MostrarEmpleadosPorRangoEdad("+51 años", 51, int.MaxValue);
+            Console.WriteLine();
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("Presione una ENTER para continuar ....");
+        Console.ReadKey();
     }
 
-
-    
-
-
-    void MostrarEmpleadosPorEdad(string[] nombres, int[] edades, double[] salarios, int totalEmpleados)
+    private static void MostrarEmpleadosPorRangoEdad(string titulo, int edadMinima, int edadmaxima)
     {
-        //throw new NotImplementedException();
-        Console.WriteLine("Ingresando al método Mostrar empleados por edad");
+        Console.WriteLine($"*************** RANGO: {titulo} ***************");
+        var empleadosRango = empleados.Take(totalEmpleados)
+            .Where(e=>e.Edad>=edadMinima && e.Edad<=edadmaxima)
+            .ToList();
+
+        if (empleadosRango.Any())
+        {
+            foreach (var empl in empleadosRango)
+            {
+                Console.WriteLine($"|{empl.Nombre} - {empl.Edad} - ${empl.Salario:F2}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("No hay empleados en este rango") ;
+        }
+
+        Console.WriteLine($"********************************************");
     }
 
     private static void AplicarAumentoSalarios()
